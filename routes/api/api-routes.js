@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
-const Workout = require('../../models/index');
+const Workout = require('../../models/workout.js');
 
 // ADD WORKOUT
-router.post('/api/workouts/:id', async ({ body }, res) => {
+router.post('/api/workouts', async (req, res) => {
     try {
         const exerciseData = await Workout.create({})
         res.status(200).json(exerciseData)
@@ -18,9 +18,8 @@ router.post('/api/workouts/:id', async ({ body }, res) => {
 
 router.put('/api/workouts/:id', async ({ params, body }, res) => {
     try {
-        const exerciseData = await Workout.findByIdAndUpdate({ id: params.id }, { $push: { exercises: body }}, { new: true}) 
-        res.status(200).json(exerciseData); req.params.id
-        
+        const exerciseData = await Workout.findByIdAndUpdate(params.id, { $push: { exercises: body }}, { new: true}) 
+        res.status(200).json(exerciseData);
     }
     catch (err) {
         res.status(400).json(err);
@@ -29,17 +28,33 @@ router.put('/api/workouts/:id', async ({ params, body }, res) => {
 
 router.get('/api/workouts/range', async (req, res) => {
     try {
-        const workoutData = await Workout.find()
-        res.status(200).json(workoutData).limit(5)
+        const workoutData = await Workout.aggregate([
+            {
+                $addFields:{
+                    totalDuration:{
+                        $sum:'$exercises.duration'
+                    }
+                }
+            }
+        ]).sort({_id:1}).limit(7)
+        res.status(200).json(workoutData).limit(7)
     }
     catch (err) {
         res.status(400).json(err)
     }
 })
 
-router.get('api/workouts', async (req, res) => {
+router.get('/api/workouts', async (req, res) => {
     try {
-        const workoutData = await Workout.find()
+        const workoutData = await Workout.aggregate([
+            {
+                $addFields:{
+                    totalDuration:{
+                        $sum:'$exercises.duration'
+                    }
+                }
+            }
+        ])
         res.status(200).json(workoutData)
     }
     catch (err) {

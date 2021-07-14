@@ -2,9 +2,9 @@ const router = require('express').Router();
 const path = require('path');
 
 // ROUTE FOR FITNESS TRACKER HOME PAGE
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-})
+// router.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../public/index.html'));
+// })
 
 // ROUTE FOR EXERCISE PAGE
 router.get('/exercise', (req, res) => {
