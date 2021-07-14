@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require('express')
-const mongoose = require('mongoose');
+const logger = require('morgan');
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost/ExampleSchema', {
     useUnifiiedTopology: true
 })
 
-app.use(require(''));
+app.use(require('./routes/api/api-routes'));
 app.use(require('./routes/home-routes')) // GET REQUESTS FOR EXERCISE, STATS, HOMEPAGE
 
 app.listen(PORT, () => {

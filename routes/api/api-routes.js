@@ -26,3 +26,23 @@ router.put('/apiworkouts/:id', async ({ params, body }, res) => {
         res.status(400).json(err);
     }
 });
+
+router.get('/api/workouts/range', async (req, res) => {
+    try {
+        const workoutData = await Workout.find()
+        res.status(200).json(workoutData).limit(5)
+    }
+    catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+router.get('api/workouts', async (req, res) => {
+    try {
+        const workoutData = await Workout.find()
+        res.status(200).json(workoutData)
+    }
+    catch (err) {
+        res.status(200).json(err)
+    }
+})
