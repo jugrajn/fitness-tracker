@@ -13,7 +13,8 @@ router.get('/exercise', (req, res) => {
 
 // ROUTE FOR STATS PAGE
 router.get('/stats', (req, res) => {
-    res.sendFile(path.join(__dirname, '../pupblic/stats.html'));
+    res.sendFile(path.join(__dirname, '../public/stats.html'));
 })
+
 
 module.exports = router;
