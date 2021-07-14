@@ -16,8 +16,10 @@ app.use(express.static('public'));
 
 mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/workout', {
     useNewUrlParser: true.valueOf,
-    useUnifiiedTopology: true
-})
+    useUnifiiedTopology: true,
+    useCreateIndex: true,
+    UseFindAndModify: false,
+});
 
 app.use(require('./routes/api/api-routes.js'));
 app.use(require('./routes/home-routes.js')) // GET REQUESTS FOR EXERCISE, STATS, HOMEPAGE
